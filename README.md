@@ -12,7 +12,7 @@ num_queries = 100
 reward_iteration(num_queries)
 ```
 
-To collect testing data, ensure that the python scripts are still running and run the following lines in Julia
+To collect testing data, ensure that the python scripts are still running and run the following lines in Julia:
 ```
 include("driving_simulate.jl")
 num_test_examples = 75
