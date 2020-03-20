@@ -87,7 +87,6 @@ function respond_to_test_set(u_test)
 
 		# Obtain user feedback
 		if P.visualize == "python-1"
-			#
 			ϕ₁, ϕ₂, pref = py"sim_trajectory"(u_tot[1:num_steps*ctrl_size],
 											  u_tot[num_steps*ctrl_size+1:end])
 		elseif P.visualize == "python-2"
