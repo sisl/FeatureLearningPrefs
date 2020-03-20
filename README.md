@@ -42,7 +42,7 @@ acc_train_vec_1, acc_eval_vec_1, acc_test_vec_1 = run_mixed_fancy_save(prefs_tra
 ```
 
 ## Network Visualization
-To visualize the network for user 1, run the following lines in a Jupyter notebook"
+To visualize the network for user 1, run the following lines in a Jupyter notebook:
 ```
 include("driving_simulate.jl")
 include("driving_viz.jl")
