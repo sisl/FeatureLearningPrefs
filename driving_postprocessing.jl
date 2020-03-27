@@ -46,25 +46,28 @@ function get_datasets(prefs_train, prefs_test, final_weights)
 end
 
 # Run training for multiple trials and get accuracies on training, test, and eval set
-function run_mixed_fancy_save(prefs_train, X_test, Y_test, W, savefile; epoch=150, num_trials=40)
+function run_mixed_very_fancy_save(prefs_train, X_test, Y_test, W, savefile; epoch=40, num_trials=40)
+	num_train = convert(Int64, round(0.7*length(prefs_train)))
+	num_eval = length(prefs_train) - num_train
+
 	acc_train_vec = zeros(num_trials)
 	acc_eval_vec = zeros(num_trials)
 	acc_test_vec = zeros(num_trials)
 	best_eval = 0
 	for i = 1:num_trials
 		println("Trial: $i")
-		w_tot, acc = train_mixed_nn(prefs_train[1:70], W; epoch=epoch)
+		w_tot, acc = train_mixed_nn(prefs_train[1:num_train], W; epoch=epoch)
 		acc_train_vec[i] = mean(acc)
 		# Get eval set
-		X_eval = zeros(30, 2*ns*num_steps*step_time)
-		Y_eval = zeros(30)
-		for j = 1:30
-			x₁ = prefs_train[j+70].x₁
-			x₂ = prefs_train[j+70].x₂
+		X_eval = zeros(num_eval, 2*ns*num_steps*step_time)
+		Y_eval = zeros(num_eval)
+		for j = 1:num_eval
+			x₁ = prefs_train[j+num_train].x₁
+			x₂ = prefs_train[j+num_train].x₂
 			x₁ = reshape(x₁, (1, length(x₁)))
 			x₂ = reshape(x₂, (1, length(x₂)))
 			X_eval[j,:] = hcat(x₁, x₂)
-			Y_eval[j] = prefs_train[j+70].pref == -1 ? 0 : prefs_train[j+70].pref
+			Y_eval[j] = prefs_train[j+num_train].pref == -1 ? 0 : prefs_train[j+num_train].pref
 		end
 		acc_eval_vec[i] = mean(accuracy(X_eval, Y_eval, w_tot[:]; hc_only=false))
 		acc_test_vec[i] = mean(accuracy(X_test, Y_test, w_tot[:]; hc_only=false))
