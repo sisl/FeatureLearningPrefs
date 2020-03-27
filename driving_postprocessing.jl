@@ -46,7 +46,7 @@ function get_datasets(prefs_train, prefs_test, final_weights)
 end
 
 # Run training for multiple trials and get accuracies on training, test, and eval set
-function run_mixed_very_fancy_save(prefs_train, X_test, Y_test, W, savefile; epoch=40, num_trials=40)
+function run_mixed_fancy_save(prefs_train, X_test, Y_test, W, savefile; epoch=40, num_trials=40)
 	num_train = convert(Int64, round(0.7*length(prefs_train)))
 	num_eval = length(prefs_train) - num_train
 
